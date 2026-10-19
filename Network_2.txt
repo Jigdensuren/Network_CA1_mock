@@ -1,0 +1,156 @@
+S1, S2, S3
+
+en
+conf t
+vlan 10
+name Students
+vlan 20
+name Faculty
+vlan 30
+name Admin
+vlan 40
+name Exams
+
+interface fa 0/10-11
+switchport mode access
+switchport access vlan 10
+interface fa0/12-13
+switchport mode access
+switchport access vlan 20
+interface fa0/14-15
+switchport mode access
+switchport access vlan 30
+interface fa0/16-17
+switchport mode access
+switchport access vlan 40
+
+exit
+hostname s1,s2,s3
+do copy run start
+
+
+switch trunk port configure---
+
+conf t
+interface g0/2
+switchport mode trunk
+switchport nonegotiate
+
+router
+conf t
+interface g0/0.10
+encapsulation dot
+encapsulation dot1Q 10
+ip address 10.1.1.254 255.255.254.0
+no shutdown
+
+interface g0/0.20
+encapsulation dot
+encapsulation dot1Q 20
+ip address 10.1.1.254 255.255.255.0
+no shutdown
+
+interface g0/0.30
+encapsulation dot
+encapsulation dot1Q 30
+ip address 10.1.1.254 255.255.255.128
+no shutdown
+
+interface g0/0.40
+encapsulation dot
+encapsulation dot1Q 40
+ip address 10.1.1.254 255.255.255.192
+no shutdown
+
+
+
+
+---------------------------------
+requirements
+
+4 vlans
+
+vlan 10		172.10.10.0 /24 
+vlan 20		192.168.12.0 /24
+vlan 30		192.168.68.0 /19
+vlan 40		10.10.40.0 /21
+
+4 switches
+
+4 pc's pre vlan
+
+that's creating a vlan------
+
+conf t
+vlan 10
+name dorset
+vlan 20
+name student
+vlan 30
+name teachers
+vlan 40
+name admin
+exit
+interface fa0/1
+switchport mode access
+switch access vlan 10
+interface fa0/2
+switchport mode access
+switch access vlan 20
+interface fa0/3
+switchport mode access
+switch access vlan 30
+interface fa0/4
+switchport mode access
+switch access vlan 40
+exit
+
+hostname s1,s2,s3,s4
+
+interface g0/1
+switchport mode trunk
+interface g0/2
+switchport mode trunk
+
+
+
+router config
+
+conf t
+hostname R1
+interface g0/0
+no shutdown
+interface g0/0.10
+encapsulation dot1q 10
+ip address 172.10.10.254 255.255.255.0
+no shutdown
+interface g0/0.20
+encapsulation dot1q 10
+ip address 192.168.12.254 255.255.255.0
+no shutdown
+interface g0/0.30
+encapsulation dot1q 10
+ip address 192.168.95.254 255.255.254.0
+no shutdown
+interface g0/0.40
+encapsulation dot1q 10
+ip address 10.10.47.254 255.255.248.0
+no shutdown
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
